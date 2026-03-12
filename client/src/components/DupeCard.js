@@ -1,6 +1,6 @@
 import "./DupeCard.css";
 
-function DupeCard({ onClick, name, brand, price, image, link, productRating, countReview, isBest }) {
+function DupeCard({ onClick, name, brand, price, image, link, productRating, countReview, isBest, isWishlisted, onWishlist }) {
   const rating = productRating ? productRating.split(" ")[0] : null;
   const stars = rating ? "★".repeat(Math.round(parseFloat(rating))) : null;
 
@@ -12,6 +12,12 @@ function DupeCard({ onClick, name, brand, price, image, link, productRating, cou
           ? <span className="card-badge best-badge">⭐ Best Dupe</span>
           : <span className="card-badge">DUPE</span>
         }
+        <button
+          className={`card-heart ${isWishlisted ? "wishlisted" : ""}`}
+          onClick={e => { e.stopPropagation(); onWishlist(); }}
+        >
+          {isWishlisted ? "♥" : "♡"}
+        </button>
       </div>
       <div className="card-body">
         {brand && <p className="card-brand">{brand}</p>}

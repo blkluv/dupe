@@ -44,3 +44,12 @@
 .navbar-link:hover:not(.active) {
   color: #c4837a;
 }
+
+.navbar-badge {
+  background: #c4837a;
+  color: white;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 50px;
+  margin-left: 4px;
+}

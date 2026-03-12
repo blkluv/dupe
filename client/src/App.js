@@ -7,6 +7,7 @@ import SkeletonCard from "./components/SkeletonCard";
 import PriceComparison from "./components/PriceComparison";
 import Navbar from "./components/Navbar";
 import Categories from "./pages/Categories";
+import Wishlist from "./pages/Wishlist";
 import "./App.css";
 
 const SUGGESTIONS = [
@@ -41,7 +42,25 @@ function App() {
   const [activeQuery, setActiveQuery] = useState("");
   const [selectedDupe, setSelectedDupe] = useState(null);
   const [originalPrice, setOriginalPrice] = useState(null);
+  const [wishlist, setWishlist] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("wishlist")) || [];
+    } catch { return []; }
+  });
   const resultsRef = useRef(null);
+
+  useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
+
+  const toggleWishlist = (dupe) => {
+    setWishlist(prev => {
+      const exists = prev.find(d => d.asin === dupe.asin);
+      return exists ? prev.filter(d => d.asin !== dupe.asin) : [...prev, dupe];
+    });
+  };
+
+  const isWishlisted = (dupe) => wishlist.some(d => d.asin === dupe.asin);
 
   const fetchDupes = async (query) => {
     setLoading(true);
@@ -153,6 +172,8 @@ function App() {
               key={index}
               {...dupe}
               isBest={bestDupe && dupe.asin === bestDupe.asin}
+              isWishlisted={isWishlisted(dupe)}
+              onWishlist={() => toggleWishlist(dupe)}
               onClick={() => setSelectedDupe(dupe)}
             />
           ))}
@@ -170,11 +191,24 @@ function App() {
 
   return (
     <div className="app">
-      <Navbar />
+      <Navbar wishlistCount={wishlist.length} />
       <Routes>
         <Route path="/" element={HomePage} />
         <Route path="/categories" element={<Categories onSearch={fetchDupes} />} />
+        <Route path="/wishlist" element={
+          <Wishlist
+            wishlist={wishlist}
+            onWishlist={toggleWishlist}
+            onCardClick={setSelectedDupe}
+          />}
+        />
       </Routes>
+      {selectedDupe && (
+        <DupeModal
+          dupe={selectedDupe}
+          onClose={() => setSelectedDupe(null)}
+        />
+      )}
     </div>
   );
 }
