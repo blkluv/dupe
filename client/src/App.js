@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
 import DupeCard from "./components/DupeCard";
 import DupeModal from "./components/DupeModal";
+import SkeletonCard from "./components/SkeletonCard";
+import PriceComparison from "./components/PriceComparison";
+import Navbar from "./components/Navbar";
+import Categories from "./pages/Categories";
 import "./App.css";
 
 const SUGGESTIONS = [
@@ -19,6 +24,15 @@ const SORT_OPTIONS = [
   { label: "Most Reviewed", value: "reviews" },
 ];
 
+function getBestDupe(results) {
+  if (!results.length) return null;
+  return results.reduce((best, curr) => {
+    const bestScore = (parseFloat(best.productRating) || 0) - (best.price / 100);
+    const currScore = (parseFloat(curr.productRating) || 0) - (curr.price / 100);
+    return currScore > bestScore ? curr : best;
+  });
+}
+
 function App() {
   const [results, setResults] = useState([]);
   const [searched, setSearched] = useState(false);
@@ -26,21 +40,34 @@ function App() {
   const [activeSort, setActiveSort] = useState("relevant");
   const [activeQuery, setActiveQuery] = useState("");
   const [selectedDupe, setSelectedDupe] = useState(null);
+  const [originalPrice, setOriginalPrice] = useState(null);
+  const resultsRef = useRef(null);
 
   const fetchDupes = async (query) => {
     setLoading(true);
     setActiveQuery(query);
+    setOriginalPrice(null);
     try {
       const res = await fetch(`http://localhost:5001/api/amazon/search?q=${query}+dupe`);
       const data = await res.json();
       setResults(data);
       setSearched(true);
       setActiveSort("relevant");
+
+      const origRes = await fetch(`http://localhost:5001/api/amazon/original?q=${query}`);
+      const origData = await origRes.json();
+      setOriginalPrice(origData.price);
     } catch (err) {
       console.error("Error fetching dupes:", err);
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (searched && resultsRef.current) {
+      resultsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [results, searched]);
 
   const getSortedResults = () => {
     const sorted = [...results];
@@ -58,8 +85,10 @@ function App() {
     }
   };
 
-  return (
-    <div className="app">
+  const bestDupe = getBestDupe(results);
+
+  const HomePage = (
+    <>
       <header className="hero">
         <p className="tagline">✨ luxury looks, budget prices</p>
         <h1 className="title">Dupe Finder</h1>
@@ -76,7 +105,7 @@ function App() {
         </div>
       </header>
 
-      <main className="results-section">
+      <main className="results-section" ref={resultsRef}>
         {searched && !loading && (
           <div className="filters-bar">
             <p className="results-label">
@@ -95,15 +124,35 @@ function App() {
             </div>
           </div>
         )}
-        {loading && <p className="no-results">Finding dupes... ✨</p>}
-        {!loading && searched && results.length === 0 && (
-          <p className="no-results">No dupes found — try another search! 🛍️</p>
+
+        {searched && !loading && originalPrice && bestDupe && (
+          <PriceComparison
+            query={activeQuery}
+            originalPrice={originalPrice}
+            dupePrice={bestDupe.price}
+          />
         )}
+
+        {loading && (
+          <div className="results-grid">
+            {[...Array(8)].map((_, i) => <SkeletonCard key={i} />)}
+          </div>
+        )}
+
+        {!loading && searched && results.length === 0 && (
+          <div className="empty-state">
+            <p className="empty-emoji">🛍️</p>
+            <p className="empty-title">No dupes found</p>
+            <p className="empty-sub">Try searching something else — we're always adding more!</p>
+          </div>
+        )}
+
         <div className="results-grid">
-          {getSortedResults().map((dupe, index) => (
+          {!loading && getSortedResults().map((dupe, index) => (
             <DupeCard
               key={index}
               {...dupe}
+              isBest={bestDupe && dupe.asin === bestDupe.asin}
               onClick={() => setSelectedDupe(dupe)}
             />
           ))}
@@ -116,6 +165,16 @@ function App() {
           onClose={() => setSelectedDupe(null)}
         />
       )}
+    </>
+  );
+
+  return (
+    <div className="app">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={HomePage} />
+        <Route path="/categories" element={<Categories onSearch={fetchDupes} />} />
+      </Routes>
     </div>
   );
 }

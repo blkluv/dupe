@@ -100,3 +100,13 @@
   background: #c4837a;
   color: white;
 }
+
+.card.best {
+  border-color: #c4837a;
+  box-shadow: 0 4px 20px rgba(196,131,122,0.2);
+}
+
+.best-badge {
+  background: #2e2e2e !important;
+  font-size: 10.5px !important;
+}

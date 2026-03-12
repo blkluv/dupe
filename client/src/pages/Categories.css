@@ -1,0 +1,85 @@
+.categories-page {
+  min-height: 100vh;
+  background: #fdf8f5;
+}
+
+.categories-hero {
+  background: linear-gradient(160deg, #fdecea 0%, #fdf0eb 50%, #fce8e4 100%);
+  padding: 64px 40px 52px;
+  text-align: center;
+}
+
+.categories-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  color: #2e2e2e;
+  margin-bottom: 12px;
+}
+
+.categories-subtitle {
+  font-size: 15px;
+  color: #9a8480;
+  font-weight: 300;
+}
+
+.categories-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 32px;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  background: white;
+  border-radius: 20px;
+  border: 1px solid #ecddd9;
+  padding: 24px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(196,131,122,0.15);
+}
+
+.category-emoji {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.category-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: #2e2e2e;
+  margin-bottom: 14px;
+}
+
+.category-searches {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.category-chip {
+  padding: 9px 14px;
+  background: #fdf8f5;
+  border: 1.5px solid #ecddd9;
+  border-radius: 50px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  color: #9a8480;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.category-chip:hover {
+  background: #c4837a;
+  color: white;
+  border-color: #c4837a;
+}

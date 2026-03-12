@@ -156,3 +156,17 @@ body {
   font-size: 15px;
   padding: 40px 0;
 }
+
+.empty-state {
+  text-align: center;
+  padding: 60px 0;
+}
+
+.empty-emoji { font-size: 48px; margin-bottom: 12px; }
+.empty-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: #2e2e2e;
+  margin-bottom: 8px;
+}
+.empty-sub { font-size: 14px; color: #9a8480; }

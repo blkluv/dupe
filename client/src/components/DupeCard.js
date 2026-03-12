@@ -1,14 +1,17 @@
 import "./DupeCard.css";
 
-function DupeCard({ onClick, name, brand, price, image, link, productRating, countReview }) {
+function DupeCard({ onClick, name, brand, price, image, link, productRating, countReview, isBest }) {
   const rating = productRating ? productRating.split(" ")[0] : null;
   const stars = rating ? "★".repeat(Math.round(parseFloat(rating))) : null;
 
   return (
-    <div className="card" onClick={onClick}>
+    <div className={`card ${isBest ? "best" : ""}`} onClick={onClick}>
       <div className="card-img-wrapper">
         <img src={image} alt={name} className="card-img" />
-        <span className="card-badge">DUPE</span>
+        {isBest
+          ? <span className="card-badge best-badge">⭐ Best Dupe</span>
+          : <span className="card-badge">DUPE</span>
+        }
       </div>
       <div className="card-body">
         {brand && <p className="card-brand">{brand}</p>}

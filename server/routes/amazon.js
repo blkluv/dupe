@@ -64,4 +64,40 @@ router.get("/product/:asin", async (req, res) => {
   }
 });
 
+// GET original luxury item price
+router.get("/original", async (req, res) => {
+  try {
+    const { q } = req.query;
+    const response = await axios.get(
+      "https://axesso-axesso-amazon-data-service-v1.p.rapidapi.com/amz/amazon-search-by-keyword-asin",
+      {
+        params: {
+          domainCode: "com",
+          keyword: q,
+          page: "1",
+          excludeSponsored: "false",
+          sortBy: "relevanceblender",
+          withCache: "true"
+        },
+        headers: {
+          "Content-Type": "application/json",
+          "x-rapidapi-host": "axesso-axesso-amazon-data-service-v1.p.rapidapi.com",
+          "x-rapidapi-key": process.env.RAPIDAPI_KEY
+        }
+      }
+    );
+
+    const first = response.data.searchProductDetails
+      .find(p => p.price > 0);
+
+    res.json({
+      name: first?.productDescription || q,
+      price: first?.price || null,
+      image: first?.imgUrl || null
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
