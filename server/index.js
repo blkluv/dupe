@@ -5,10 +5,12 @@ require("dotenv").config();
 
 const dupesRoute = require("./routes/dupes");
 const amazonRoute = require("./routes/amazon");
+const trendingRoute = require("./routes/trending");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/api/trending", trendingRoute);
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected ✅"))

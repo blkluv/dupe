@@ -1,0 +1,50 @@
+.trending {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 32px 0;
+}
+
+.trending-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #9a8480;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.trending-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.trending-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: white;
+  border: 1.5px solid #ecddd9;
+  border-radius: 50px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  color: #2e2e2e;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.trending-chip:hover {
+  background: #c4837a;
+  color: white;
+  border-color: #c4837a;
+}
+
+.trending-chip:hover .trending-rank {
+  color: rgba(255,255,255,0.7);
+}
+
+.trending-rank {
+  font-size: 11px;
+  color: #c4837a;
+  font-weight: 600;
+}

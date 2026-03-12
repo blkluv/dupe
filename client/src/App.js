@@ -8,6 +8,9 @@ import PriceComparison from "./components/PriceComparison";
 import Navbar from "./components/Navbar";
 import Categories from "./pages/Categories";
 import Wishlist from "./pages/Wishlist";
+import Trending from "./components/Trending";
+import DidYouMean from "./components/DidYouMean";
+import API_URL from "./config";
 import "./App.css";
 
 const SUGGESTIONS = [
@@ -67,15 +70,21 @@ function App() {
     setActiveQuery(query);
     setOriginalPrice(null);
     try {
-      const res = await fetch(`http://localhost:5001/api/amazon/search?q=${query}+dupe`);
+      const res = await fetch(`${API_URL}/api/amazon/search?q=${query}+dupe`);
       const data = await res.json();
       setResults(data);
       setSearched(true);
       setActiveSort("relevant");
 
-      const origRes = await fetch(`http://localhost:5001/api/amazon/original?q=${query}`);
+      const origRes = await fetch(`${API_URL}/api/amazon/original?q=${query}`);
       const origData = await origRes.json();
       setOriginalPrice(origData.price);
+
+      fetch(`${API_URL}/api/trending/track`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: query.toLowerCase().trim() })
+      });
     } catch (err) {
       console.error("Error fetching dupes:", err);
     }
@@ -113,6 +122,7 @@ function App() {
         <h1 className="title">Dupe Finder</h1>
         <p className="subtitle">Search any luxury item and discover affordable alternatives you'll actually love</p>
         <SearchBar onSearch={fetchDupes} />
+        <DidYouMean query={activeQuery} onSearch={fetchDupes} />
         <div className="suggestions-wrapper">
           <div className="suggestions">
             {SUGGESTIONS.map(s => (
@@ -123,6 +133,8 @@ function App() {
           </div>
         </div>
       </header>
+
+      <Trending onSearch={fetchDupes} />
 
       <main className="results-section" ref={resultsRef}>
         {searched && !loading && (

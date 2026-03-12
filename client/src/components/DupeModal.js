@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import API_URL from "../config";
 import "./DupeModal.css";
 
 function DupeModal({ dupe, onClose, onWishlist, isWishlisted }) {
@@ -10,7 +11,7 @@ function DupeModal({ dupe, onClose, onWishlist, isWishlisted }) {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const res = await fetch(`http://localhost:5001/api/amazon/product/${dupe.asin}`);
+        const res = await fetch(`${API_URL}/api/amazon/product/${dupe.asin}`);
         const data = await res.json();
         if (data.imageUrlList && data.imageUrlList.length > 0) {
           setImages(data.imageUrlList);
