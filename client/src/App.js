@@ -72,7 +72,7 @@ function App() {
     try {
       const res = await fetch(`${API_URL}/api/amazon/search?q=${query}+dupe`);
       const data = await res.json();
-      setResults(data);
+      setResults(Array.isArray(data) ? data : []);
       setSearched(true);
       setActiveSort("relevant");
 
