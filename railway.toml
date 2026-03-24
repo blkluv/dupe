@@ -1,0 +1,7 @@
+cat > railway.toml << 'EOF'
+[build]
+builder = "railpack"
+
+[deploy]
+startCommand = "cd server && npm start"
+EOF
