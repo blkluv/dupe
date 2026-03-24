@@ -3,4 +3,3 @@ builder = "railpack"
 
 [deploy]
 startCommand = "cd server && npm start"
-EOF
