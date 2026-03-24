@@ -1,8 +1,0 @@
-[build]
-builder = "nixpacks"
-
-[build.nixpacks]
-phases = { setup = { nixPkgs = ["nodejs"] }, install = { cmds = ["cd server && npm install"] } }
-
-[deploy]
-startCommand = "cd server && node index.js"
