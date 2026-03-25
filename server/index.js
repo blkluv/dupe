@@ -1,7 +1,17 @@
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors');  // ← ADD THIS
 const app = express();
 const port = process.env.PORT || 8080;
+
+// Import routes
+const trendingRoutes = require('./routes/trending');  // ← ADD THIS
+
+// CORS middleware - ADD THIS BLOCK
+app.use(cors({
+  origin: 'https://dupe-eta.vercel.app',  // Your frontend URL
+  credentials: true
+}));
 
 app.use(express.json());
 
@@ -10,10 +20,8 @@ app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Dupe API running' });
 });
 
-// Trending endpoint
-app.get('/api/trending', (req, res) => {
-  res.json([]);
-});
+// Use trending routes - ADD THIS
+app.use('/api/trending', trendingRoutes);
 
 // Amazon search endpoint
 app.get('/api/amazon/search', async (req, res) => {
@@ -51,8 +59,8 @@ app.get('/api/amazon/search', async (req, res) => {
         price: p.price,
         image: p.imgUrl,
         link: `https://amazon.com/dp/${p.asin}/?tag=${process.env.AMAZON_ASSOCIATES_TAG || ''}`,
-        rating: p.productRating,
-        reviews: p.countReview,
+        productRating: p.productRating,
+        countReview: p.countReview,
         asin: p.asin
       }));
     

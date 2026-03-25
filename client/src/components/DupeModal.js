@@ -12,18 +12,32 @@ function DupeModal({ dupe, onClose, onWishlist, isWishlisted }) {
     const fetchImages = async () => {
       try {
         const res = await fetch(`${API_URL}/api/amazon/product/${dupe.asin}`);
+        
+        // Check if the response is ok (status 200)
+        if (!res.ok) {
+          // If endpoint doesn't exist or fails, just use the original image
+          setImages([dupe.image]);
+          setActiveImg(dupe.image);
+          setLoading(false);
+          return;
+        }
+        
         const data = await res.json();
         if (data.imageUrlList && data.imageUrlList.length > 0) {
           setImages(data.imageUrlList);
           setActiveImg(data.imageUrlList[0]);
+        } else {
+          setImages([dupe.image]);
         }
       } catch (err) {
-        console.error(err);
+        // Silently fail and use the original image
+        console.error("Failed to fetch additional images:", err);
+        setImages([dupe.image]);
       }
       setLoading(false);
     };
     fetchImages();
-  }, [dupe.asin]);
+  }, [dupe.asin, dupe.image]);
 
   const handleShare = () => {
     navigator.clipboard.writeText(dupe.link);

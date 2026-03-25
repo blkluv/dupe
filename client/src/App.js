@@ -76,15 +76,18 @@ function App() {
       setSearched(true);
       setActiveSort("relevant");
 
-      const origRes = await fetch(`${API_URL}/api/amazon/original?q=${query}`);
-      const origData = await origRes.json();
-      setOriginalPrice(origData.price);
-
+      // Track the search for trending
       fetch(`${API_URL}/api/trending/track`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: query.toLowerCase().trim() })
-      });
+      }).catch(err => console.error("Failed to track search:", err));
+
+      // TODO: Add original price comparison when backend endpoint is ready
+      // const origRes = await fetch(`${API_URL}/api/amazon/original?q=${query}`);
+      // const origData = await origRes.json();
+      // setOriginalPrice(origData.price);
+      
     } catch (err) {
       console.error("Error fetching dupes:", err);
     }

@@ -4,5 +4,9 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "mongoose": "^9.3.2"
   }
 }
