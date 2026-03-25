@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Trending.css";
+import API_URL from "../config";  // ← ADD THIS LINE
 
 function Trending({ onSearch }) {
   const [trending, setTrending] = useState([]);
@@ -7,7 +8,7 @@ function Trending({ onSearch }) {
   useEffect(() => {
     const fetchTrending = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/trending");
+        const res = await fetch(`${API_URL}/api/trending`);  // ← CHANGE THIS LINE
         const data = await res.json();
         setTrending(data);
       } catch (err) {
