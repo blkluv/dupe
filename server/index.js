@@ -1,26 +1,32 @@
 const express = require('express');
 const axios = require('axios');
-const cors = require('cors');  // ← ADD THIS
+const cors = require('cors');
+const mongoose = require('mongoose');  // ← ADD THIS
 const app = express();
 const port = process.env.PORT || 8080;
 
 // Import routes
-const trendingRoutes = require('./routes/trending');  // ← ADD THIS
+const trendingRoutes = require('./routes/trending');
 
-// CORS middleware - ADD THIS BLOCK
+// CORS middleware
 app.use(cors({
-  origin: 'https://dupe-eta.vercel.app',  // Your frontend URL
+  origin: 'https://dupe-eta.vercel.app',
   credentials: true
 }));
 
 app.use(express.json());
+
+// MongoDB connection - ADD THIS BLOCK
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('✅ MongoDB connected'))
+  .catch(err => console.error('❌ MongoDB connection error:', err.message));
 
 // Health check
 app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Dupe API running' });
 });
 
-// Use trending routes - ADD THIS
+// Use trending routes
 app.use('/api/trending', trendingRoutes);
 
 // Amazon search endpoint
