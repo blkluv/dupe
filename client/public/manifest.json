@@ -1,6 +1,8 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "$schema": "https://json.schemastore.org/web-manifest.json",
+  "short_name": "Dupe.deal",
+  "name": "Dupe Deal",
+  "description": "Find verified dupes for luxury brands. Save up to 80% on beauty, fashion, perfume, and home dupes.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +22,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#c4837a",
+  "background_color": "#fdf8f5"
 }
