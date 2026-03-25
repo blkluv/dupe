@@ -134,7 +134,7 @@ function App() {
         </p>
         
         <h1 className="title">
-          Dupe Finder: The Ultimate Search Engine for Luxury Dupes
+          Dupe.deal: The Ultimate Search Engine for Luxury Dupes
         </h1>
         
         <p className="subtitle">
