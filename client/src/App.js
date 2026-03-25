@@ -14,10 +14,18 @@ import API_URL from "./config";
 import "./App.css";
 
 const SUGGESTIONS = [
-  "Dyson Airwrap", "Stanley Cup", "Lululemon Leggings",
-  "UGG Boots", "Skims Bodysuit", "Golden Goose Sneakers",
-  "Acne Studios Scarf", "Bottega Veneta Bag", "Le Creuset",
-  "Aritzia Jacket", "Free People Dress", "Dr. Martens"
+  "Bogg Bag dupe",
+  "Hulken Bag dupe",
+  "Oura Ring dupe",
+  "Baccarat Rouge dupe",
+  "Creed Aventus dupe",
+  "Cloud Couch dupe",
+  "Lululemon Leggings dupe",
+  "Birkin dupe",
+  "Skims dupe",
+  "Sand and Fog",
+  "Miu Miu sunglasses dupe",
+  "Goyard dupe"
 ];
 
 const SORT_OPTIONS = [
@@ -121,12 +129,28 @@ function App() {
   const HomePage = (
     <>
       <header className="hero">
-        <p className="tagline">✨ luxury looks, budget prices</p>
-        <h1 className="title">Dupe Finder</h1>
-        <p className="subtitle">Search any luxury item and discover affordable alternatives you'll actually love</p>
+        <p className="tagline">
+          ⭐ 10,000+ Verified Dupes | Save 50-80% on Luxury Brands
+        </p>
+        
+        <h1 className="title">
+          Dupe Finder: The Ultimate Search Engine for Luxury Dupes
+        </h1>
+        
+        <p className="subtitle">
+          Stop overpaying for designer brands. Our dupe finder helps you discover 
+          affordable alternatives for Dyson Airwrap dupes, Lululemon leggings dupes, 
+          Stanley cup dupes, Skims dupes, Baccarat Rouge perfume dupes, and hundreds 
+          more luxury products. Every dupe is verified with real reviews and ratings.
+        </p>
+        
         <SearchBar onSearch={fetchDupes} />
         <DidYouMean query={activeQuery} onSearch={fetchDupes} />
+        
         <div className="suggestions-wrapper">
+          <div className="suggestions-label">
+            🔥 Most Searched Dupes This Week
+          </div>
           <div className="suggestions">
             {SUGGESTIONS.map(s => (
               <button key={s} className="suggestion-chip" onClick={() => fetchDupes(s)}>

@@ -6,7 +6,7 @@ function Navbar({ wishlistCount }) {
 
   return (
     <nav className="navbar">
-      <Link to="/" className="navbar-logo">Dupe Finder</Link>
+      <Link to="/" className="navbar-logo">Dupe.deal</Link>
       <div className="navbar-links">
         <Link to="/" className={`navbar-link ${location.pathname === "/" ? "active" : ""}`}>
           Home
