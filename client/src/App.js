@@ -14,13 +14,11 @@ import API_URL from "./config";
 import "./App.css";
 
 const SUGGESTIONS = [
-  "Bogg Bag dupe",
   "Hulken Bag dupe",
   "Oura Ring dupe",
   "Baccarat Rouge dupe",
   "Creed Aventus dupe",
   "Cloud Couch dupe",
-  "Lululemon Leggings dupe",
   "Birkin dupe",
   "Skims dupe",
   "Sand and Fog",
