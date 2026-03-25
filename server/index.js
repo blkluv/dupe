@@ -10,7 +10,7 @@ const trendingRoutes = require('./routes/trending');
 
 // DYNAMIC CORS - Handles Vercel Previews & Local Dev
 const allowedOrigins = [
-  'https://dupe-eta.vercel.app',
+  'https://dupe.deal',
   /\.vercel\.app$/, // Allows all Vercel preview branches
   'http://localhost:3000'
 ];
