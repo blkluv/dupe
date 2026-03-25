@@ -40,11 +40,41 @@
   border: 1px solid #ecddd9;
   padding: 24px;
   transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
 }
 
 .category-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 32px rgba(196,131,122,0.15);
+}
+
+/* 🔥 HOT TRENDING CARD STYLES */
+.category-card.trending-hot {
+  border: 2px solid #ff4444;
+  background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.category-card.trending-hot::before {
+  content: "🔥";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 20px;
+  opacity: 0.6;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
 }
 
 .category-emoji {
@@ -57,6 +87,54 @@
   font-size: 20px;
   color: #2e2e2e;
   margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* 🔥 HOT BADGE */
+.hot-badge {
+  background: linear-gradient(135deg, #ff4444, #ff6b6b);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  box-shadow: 0 2px 6px rgba(255,68,68,0.3);
+  animation: subtle-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes subtle-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 6px rgba(255,68,68,0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255,68,68,0.5);
+  }
+}
+
+/* 📈 RISING BADGE */
+.rising-badge {
+  font-size: 14px;
+  display: inline-block;
+  animation: bounce 1s ease-in-out infinite;
+  background: rgba(76, 175, 80, 0.1);
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
 }
 
 .category-searches {
@@ -82,4 +160,63 @@
   background: #c4837a;
   color: white;
   border-color: #c4837a;
+}
+
+/* 🔥 Special styling for trending category chips */
+.trending-hot .category-chip {
+  border-color: #ffdddd;
+  background: #fffafa;
+}
+
+.trending-hot .category-chip:hover {
+  background: #ff4444;
+  border-color: #ff4444;
+  color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .categories-hero {
+    padding: 48px 24px 36px;
+  }
+  
+  .categories-title {
+    font-size: 36px;
+  }
+  
+  .categories-main {
+    padding: 32px 20px;
+  }
+  
+  .categories-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  
+  .category-card {
+    padding: 20px;
+  }
+  
+  .category-name {
+    font-size: 18px;
+  }
+  
+  .category-emoji {
+    font-size: 28px;
+  }
+  
+  .hot-badge {
+    font-size: 8px;
+    padding: 2px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .category-card {
+    max-width: 100%;
+  }
 }

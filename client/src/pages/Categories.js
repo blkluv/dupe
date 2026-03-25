@@ -2,14 +2,99 @@ import { useNavigate } from "react-router-dom";
 import "./Categories.css";
 
 const CATEGORIES = [
-  { label: "Hair Tools", emoji: "💇‍♀️", searches: ["Dyson Airwrap", "Dyson Blow Dryer", "Hot Tools Curling Iron"] },
-  { label: "Bags & Purses", emoji: "👜", searches: ["Bottega Veneta Bag", "Louis Vuitton Bag", "Prada Bag"] },
-  { label: "Activewear", emoji: "🏋️‍♀️", searches: ["Lululemon Leggings", "Lululemon Sports Bra", "Alo Yoga Leggings"] },
-  { label: "Shoes", emoji: "👟", searches: ["Golden Goose Sneakers", "UGG Boots", "Dr. Martens"] },
-  { label: "Clothing", emoji: "👗", searches: ["Skims Bodysuit", "Aritzia Jacket", "Free People Dress"] },
-  { label: "Skincare", emoji: "✨", searches: ["La Mer Moisturizer", "SK-II Essence", "Tatcha Rice Wash"] },
-  { label: "Kitchen", emoji: "🍳", searches: ["Le Creuset", "Staub Dutch Oven", "Vitamix Blender"] },
-  { label: "Accessories", emoji: "🧣", searches: ["Acne Studios Scarf", "Bottega Veneta Sunglasses", "Mejuri Jewelry"] },
+  { 
+    label: "🔥 Trending Now", 
+    emoji: "📈", 
+    searches: [
+      "Bogg Bag dupe", 
+      "Hulken Bag dupe", 
+      "Oura Ring dupe", 
+      "Birkin dupe",
+      "Sand and Fog"
+    ],
+    trend: "hot"
+  },
+  { 
+    label: "Perfume Dupes", 
+    emoji: "🌸", 
+    searches: [
+      "Baccarat Rouge dupe",
+      "Creed Aventus dupe", 
+      "Club de Nuit",
+      "LV Imagination dupe",
+      "Mojave Ghost dupe"
+    ],
+    trend: "rising"
+  },
+  { 
+    label: "Bag Dupes", 
+    emoji: "👜", 
+    searches: [
+      "Bottega Veneta Bag dupe",
+      "Louis Vuitton Bag dupe", 
+      "Goyard dupe",
+      "Miu Miu sunglasses dupe",
+      "City bag dupe"
+    ],
+    trend: "popular"
+  },
+  { 
+    label: "Activewear", 
+    emoji: "🏋️‍♀️", 
+    searches: [
+      "Lululemon Leggings dupe",
+      "Alo Yoga dupe", 
+      "Vuori shorts dupe",
+      "Skims dupe"
+    ],
+    trend: "stable"
+  },
+  { 
+    label: "Shoes", 
+    emoji: "👟", 
+    searches: [
+      "Golden Goose Sneakers dupe",
+      "UGG Boots dupe", 
+      "Dr. Martens dupe",
+      "Hoka Shoes dupe",
+      "On Cloud Shoes dupe"
+    ],
+    trend: "stable"
+  },
+  { 
+    label: "Home & Furniture", 
+    emoji: "🏠", 
+    searches: [
+      "Pottery Barn dupe",
+      "West Elm dupe", 
+      "Mackenzie Childs dupe",
+      "Le Creuset dupe",
+      "Lola blanket dupe"
+    ],
+    trend: "rising"
+  },
+  { 
+    label: "Beauty", 
+    emoji: "💄", 
+    searches: [
+      "La Mer dupe",
+      "Rhode glazing milk dupe",
+      "Kerastase night serum dupe",
+      "Tatcha Rice Wash dupe"
+    ],
+    trend: "rising"
+  },
+  { 
+    label: "Kitchen", 
+    emoji: "🍳", 
+    searches: [
+      "Ninja Creami dupe",
+      "Le Creuset dupe",
+      "Staub Dutch Oven dupe",
+      "Nespresso Machine dupe"
+    ],
+    trend: "stable"
+  }
 ];
 
 function Categories({ onSearch }) {
@@ -31,9 +116,13 @@ function Categories({ onSearch }) {
       <main className="categories-main">
         <div className="categories-grid">
           {CATEGORIES.map(cat => (
-            <div key={cat.label} className="category-card">
+            <div key={cat.label} className={`category-card ${cat.trend === 'hot' ? 'trending-hot' : ''}`}>
               <div className="category-emoji">{cat.emoji}</div>
-              <h2 className="category-name">{cat.label}</h2>
+              <h2 className="category-name">
+                {cat.label}
+                {cat.trend === 'hot' && <span className="hot-badge">HOT</span>}
+                {cat.trend === 'rising' && <span className="rising-badge">↗️</span>}
+              </h2>
               <div className="category-searches">
                 {cat.searches.map(s => (
                   <button
